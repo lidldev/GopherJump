@@ -5,7 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 )
 
-type char struct {
+type Char struct {
 	x  int
 	y  int
 	vx int
@@ -13,19 +13,19 @@ type char struct {
 }
 
 const (
-	groundY = 290
-	unit    = 16
+	groundY = 395
+	unit    = 10
 )
 
-func (c *char) jumpFunc() {
+func (c *Char) tryJump() {
 	if c.y == groundY*unit {
 		c.vy = -10 * unit
 	}
 }
 
-func (c *char) update() {
-	c.x = c.vx
-	c.y = c.vy
+func (c *Char) update() {
+	c.x += c.vx
+	c.y += c.vy
 
 	if c.y > groundY*unit {
 		c.y = groundY * unit
@@ -41,12 +41,13 @@ func (c *char) update() {
 }
 
 type Player struct {
-	c *char
+	c   *Char
+	cam camera
 }
 
 func (p *Player) Update() error {
 	if p.c == nil {
-		p.c = &char{x: 50 * unit, y: groundY * unit}
+		p.c = &Char{x: 50 * unit, y: groundY * unit}
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
@@ -55,8 +56,10 @@ func (p *Player) Update() error {
 		p.c.vx = -5 * unit
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
-		p.c.jumpFunc()
+		p.c.tryJump()
 	}
+
+	p.cam.x = p.c.x
 
 	p.c.update()
 	return nil
