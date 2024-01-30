@@ -14,6 +14,7 @@ var Assets embed.FS
 var MainChar = GetSingleImage("mainchar.png")
 var LeftChar = GetSingleImage("left.png")
 var RightChar = GetSingleImage("right.png")
+var Background = GetSingleImage("Sprite-0001.png")
 
 func GetSingleImage(name string) *ebiten.Image {
 	file, err := Assets.Open(name)

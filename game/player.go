@@ -51,9 +51,9 @@ func (p *Player) Update() error {
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyA) {
-		p.c.vx = 5 * unit
-	} else if ebiten.IsKeyPressed(ebiten.KeyD) {
 		p.c.vx = -5 * unit
+	} else if ebiten.IsKeyPressed(ebiten.KeyD) {
+		p.c.vx = 5 * unit
 	}
 	if inpututil.IsKeyJustPressed(ebiten.KeySpace) {
 		p.c.tryJump()
